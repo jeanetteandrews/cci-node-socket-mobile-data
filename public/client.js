@@ -24,8 +24,11 @@ function draw() {
     index = constrain(index, 0, midiNotes.length - 1);
     let midi = midiNotes[index];
 
+    let transposedMidi = midi + random([0, 12, -12, -24]);
+    console.log(transposedMidi)
+
     if (playing) {
-      osc.freq(midiToFreq(midi), 0.1);
+      osc.freq(midiToFreq(transposedMidi), 0.1);
       osc.amp(0.15 * ampMult, 0.1);
     }
 
@@ -56,7 +59,7 @@ function draw() {
       y: mouseY,
       color: currentColor,
       synth: currentWaveform, 
-      midi: midi
+      midi: transposedMidi
     };
     socket.emit("update", data);
   }
